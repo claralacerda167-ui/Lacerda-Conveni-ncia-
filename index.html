@@ -152,7 +152,7 @@ input {
 <a class="whats" href="https://wa.me/559696981314137">📲</a>
 
 <script>
-const produtos = [
+let produtos = JSON.parse(localStorage.getItem("produtos")) || [];
  {nome:"Skol",preco:4,cat:"cerveja",img:"https://images.unsplash.com/photo-1584225064785-c62a8b43d148"},
  {nome:"Império",preco:4,cat:"cerveja",img:"https://images.unsplash.com/photo-1608270586620-248524c67de9"},
  {nome:"Petra",preco:4,cat:"cerveja",img:"https://images.unsplash.com/photo-1514361892635-e9558d11e5c9"},
