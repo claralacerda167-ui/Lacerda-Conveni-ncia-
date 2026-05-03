@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Painel de Produtos</title>
+
+<style>
+body {
+  font-family: Arial;
+  background:#0f0f0f;
+  color:white;
+  padding:20px;
+}
+
+input, select {
+  width:100%;
+  padding:8px;
+  margin:5px 0;
+  border-radius:6px;
+  border:none;
+}
+
+button {
+  background:#25D366;
+  border:none;
+  padding:10px;
+  color:white;
+  border-radius:6px;
+  margin-top:5px;
+}
+
+.card {
+  background:#1c1c1c;
+  padding:10px;
+  margin-top:10px;
+  border-radius:10px;
+}
+</style>
+</head>
+
+<body>
+
+<h2>📦 Painel de Produtos</h2>
+
+<input id="nome" placeholder="Nome do produto">
+<input id="preco" placeholder="Preço">
+<input id="img" placeholder="Link da imagem">
+
+<select id="cat">
+  <option value="cerveja">Cerveja</option>
+  <option value="ice">Ice</option>
+  <option value="energetico">Energético</option>
+</select>
+
+<button onclick="add()">Adicionar Produto</button>
+
+<div id="lista"></div>
+
+<script>
+let produtos = JSON.parse(localStorage.getItem("produtos")) || [];
+
+function salvar(){
+  localStorage.setItem("produtos", JSON.stringify(produtos));
+}
+
+function add(){
+  let nome = document.getElementById("nome").value;
+  let preco = document.getElementById("preco").value;
+  let img = document.getElementById("img").value;
+  let cat = document.getElementById("cat").value;
+
+  if(!nome || !preco) return alert("Preencha os campos!");
+
+  produtos.push({nome, preco:parseFloat(preco), img, cat});
+  salvar();
+  render();
+}
+
+function remover(i){
+  produtos.splice(i,1);
+  salvar();
+  render();
+}
+
+function render(){
+  let html="";
+  produtos.forEach((p,i)=>{
+    html+=`
+    <div class="card">
+      <strong>${p.nome}</strong><br>
+      R$ ${p.preco}<br>
+      <button onclick="remover(${i})">Excluir</button>
+    </div>`;
+  });
+
+  document.getElementById("lista").innerHTML = html;
+}
+
+render();
+</script>
+
+</body>
+</html>
